@@ -55,7 +55,7 @@
 
                 <!-- Settings -->
                 <li class="nav-item nav-item {{ Str::contains(request()->path(), 'admin.general.settings') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="{{ route('admin.general.settings') }}">
+                    <a href="{{ route('admin.general.settings') }}">
                         <i class="fas fa-cog"></i>
                         <p>App Settings</p>
                     </a>

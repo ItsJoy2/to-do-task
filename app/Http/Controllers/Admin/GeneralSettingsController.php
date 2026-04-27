@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\GeneralSetting;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Models\GeneralSetting;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class GeneralSettingsController extends Controller

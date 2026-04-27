@@ -128,28 +128,12 @@
                             style="object-fit: cover; border-width: 2px !important;"
                             onerror="this.src='{{ url('assets/profile-icon.png') }}'">
 
-                        {{-- KYC Verified Badge --}}
-                        @if(auth()->user()->kyc_status == 1)
-                            <span class="position-absolute bottom-0 end-0 d-flex align-items-center justify-content-center rounded-circle bg-success border border-white"
-                                style="width:14px; height:14px;" title="KYC Verified">
-                                <i class="mdi mdi-check text-white" style="font-size:10px;"></i>
-                            </span>
-                        @endif
+
 
                     </div>
                     <div class="ms-2 d-none d-sm-block text-end">
                         <p class="mb-0 navbar-profile-name">{{ auth()->user()->name }}</p>
 
-
-                        <small class="text-muted d-block text-end">
-                            @if(auth()->user()->is_director == 1)
-                                Director
-                            @elseif(auth()->user()->is_shareholder == 1)
-                                Shareholder
-                            @else
-
-                            @endif
-                        </small>
                     </div>
 
                     <i class="mdi mdi-menu-down d-none d-sm-block ms-1"></i>
@@ -159,17 +143,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                   <h6 class="p-3 mb-0">Settings</h6>
-                  <div class="dropdown-divider"></div>
-                  <a href="{{ route('user.profile') }}" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-account-circle text-success"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Profile</p>
-                    </div>
-                  </a>
                   <div class="dropdown-divider"></div>
                     <form id="logout-form" action="{{ route('user.logout') }}" method="POST">
                         @csrf

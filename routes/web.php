@@ -15,12 +15,12 @@ Route::get('admin/dashboard',[TodoController::class,'index'])->middleware(['auth
 Route::prefix('admin')->middleware('auth')->group(function () {
 
     //all user
+
     Route::get('users', [UsersController::class, 'index'])->name('admin.users.index');
     Route::put('users/update', [UsersController::class, 'update'])->name('admin.users.update');
     Route::get('users/{id}', [UsersController::class, 'show'])->name('admin.users.show');
     Route::post('users/wallet-update', [UsersController::class, 'updateWallet'])->name('admin.users.wallet.update');
 
-    Route::get('all-task', [TodoController::class, 'list'])->name('admin.tasks.list');
     Route::resource('tasks', TodoController::class)->names([
     'create'  => 'admin.tasks.add',
     'store'   => 'admin.tasks.store',
@@ -29,6 +29,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     'update'  => 'admin.tasks.update',
     'destroy' => 'admin.tasks.delete',
 ]);
+    Route::get('all-task', [TodoController::class, 'list'])->name('admin.tasks.list');
 
 
     // General Settings

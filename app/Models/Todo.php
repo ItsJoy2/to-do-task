@@ -10,6 +10,7 @@ class Todo extends Model
         'user_id',
         'title',
         'description',
+        'priority',
         'task_date',
         'is_completed',
         'completed_at',

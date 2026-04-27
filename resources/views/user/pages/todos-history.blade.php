@@ -29,6 +29,7 @@
                 <th>Completed</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Priority</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -60,7 +61,27 @@
                 </td>
 
                 <!-- Description -->
-                <td>{{ $todo['description'] }}</td>
+                <td>
+                    {{ \Illuminate\Support\Str::limit($todo['description'], 50) }}
+
+                    @if(strlen($todo['description']) > 50)
+                        <button
+                            class="btn btn-sm btn-link text-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#descModal{{ $todo['id'] }}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    @endif
+                </td>
+
+                <!-- Priority -->
+                <td>
+                    <span class="badge
+                        {{ $todo['priority'] == 'high' ? 'bg-danger' :
+                        ($todo['priority'] == 'medium' ? 'bg-primary' : 'bg-info') }}">
+                        {{ ucfirst($todo['priority']) }}
+                    </span>
+                </td>
 
                 <!-- Status -->
                 <td>
@@ -116,9 +137,16 @@
 
                                 <div class="form-group mt-2">
                                     <label>Description</label>
-                                    <textarea name="description" class="form-control">{{ $todo['description'] }}</textarea>
+                                    <textarea name="description" class="form-control text-light">{{ $todo['description'] }}</textarea>
                                 </div>
-
+                                <div class="mb-2">
+                                    <label>Priority</label>
+                                    <select name="priority" class="form-control text-light">
+                                        <option value="low" {{ $todo['priority'] == 'low' ? 'selected' : '' }}>Low</option>
+                                        <option value="medium" {{ $todo['priority'] == 'medium' ? 'selected' : '' }}>Medium</option>
+                                        <option value="high" {{ $todo['priority'] == 'high' ? 'selected' : '' }}>High</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -130,6 +158,33 @@
                         </div>
 
                     </form>
+                </div>
+            </div>
+
+            <!-- ================= DESCRIPTION MODAL ================= -->
+            <div class="modal fade" id="descModal{{ $todo['id'] }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Description</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="fw-bold">Task Name</label>
+                                <div class="border rounded p-2">
+                                    {{ $todo['title'] }}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="fw-bold">Description</label>
+                                <div class="border rounded p-2">
+                                    {{ $todo['description'] }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -176,17 +231,25 @@
 
                     <div class="form-group">
                         <label>Task Title</label>
-                        <input type="text" name="title" class="form-control" required>
+                        <input type="text" name="title" class="form-control text-light" required>
                     </div>
 
                     <div class="form-group mt-2">
                         <label>Description</label>
-                        <textarea name="description" class="form-control"></textarea>
+                        <textarea name="description" class="form-control text-light"></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label>Priority</label>
+                        <select name="priority" class="form-control text-light">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
                     </div>
 
                     <div class="form-group mt-2">
                         <label>Date</label>
-                        <input type="date" name="task_date" class="form-control" value="{{ date('Y-m-d') }}">
+                        <input type="date" name="task_date" class="form-control text-light" value="{{ date('Y-m-d') }}">
                     </div>
 
                 </div>

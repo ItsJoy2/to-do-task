@@ -139,105 +139,109 @@
 
     <div class="card shadow-sm border-0 mt-4">
 
-    <div class="card-body">
+        <div class="card-body">
 
-        {{-- Header with select --}}
-        <div class="d-flex justify-content-between align-items-center mb-3">
+            {{-- Header with select --}}
+            <div class="d-flex justify-content-between align-items-center mb-3">
 
-            <h5 class="fw-bold mb-0">
-                Performance Overview
-            </h5>
+                <h5 class="fw-bold mb-0">
+                    Performance Overview
+                </h5>
 
-            <form method="GET" class="d-flex gap-2">
+                <form method="GET" class="d-flex gap-2">
 
-                {{-- MONTH --}}
-                <select name="month" class="form-select form-select-sm" onchange="this.form.submit()">
+                    {{-- MONTH --}}
+                    <select name="month" class="form-select form-select-sm" onchange="this.form.submit()">
 
-                    @for($m = 1; $m <= 12; $m++)
-                        <option value="{{ $m }}"
-                            {{ $userData['selectedMonth'] == $m ? 'selected' : '' }}>
-                            {{ DateTime::createFromFormat('!m', $m)->format('F') }}
+                        <option value="all" {{ $userData['selectedMonth'] == 'all' ? 'selected' : '' }}>
+                            All Months (Jan - Dec)
                         </option>
-                    @endfor
 
-                </select>
+                        @for($m = 1; $m <= 12; $m++)
+                            <option value="{{ $m }}"
+                                {{ $userData['selectedMonth'] == $m ? 'selected' : '' }}>
+                                {{ DateTime::createFromFormat('!m', $m)->format('F') }}
+                            </option>
+                        @endfor
 
-                {{-- YEAR --}}
-                <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+                    </select>
 
-                    @foreach($userData['years'] as $y)
-                        <option value="{{ $y }}"
-                            {{ $userData['selectedYear'] == $y ? 'selected' : '' }}>
-                            {{ $y }}
-                        </option>
-                    @endforeach
+                    {{-- YEAR --}}
+                    <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
 
-                </select>
+                        @foreach($userData['years'] as $y)
+                            <option value="{{ $y }}"
+                                {{ $userData['selectedYear'] == $y ? 'selected' : '' }}>
+                                {{ $y }}
+                            </option>
+                        @endforeach
 
-            </form>
+                    </select>
 
-        </div>
+                </form>
 
-        {{-- TABLE --}}
-        <div class="table-responsive">
+            </div>
 
-            <table class="table table-bordered text-center">
+            {{-- TABLE --}}
+            <div class="table-responsive">
 
-                <thead class="table-light">
-                    <tr>
-                        <th>User</th>
-                        <th>Total Tasks</th>
-                        <th>Completed</th>
-                        <th>Pending</th>
-                        <th>Progress</th>
-                    </tr>
-                </thead>
+                <table class="table table-bordered text-center">
 
-                <tbody>
+                    <thead class="table-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Total Tasks</th>
+                            <th>Completed</th>
+                            <th>Pending</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
 
-                    @forelse($userData['users'] as $user)
+                    <tbody>
 
-                    <tr>
+                        @forelse($userData['users'] as $user)
 
-                        <td>{{ $user['name'] }}</td>
+                        <tr>
 
-                        <td>{{ $user['selected_total'] }}</td>
+                            <td>{{ $user['name'] }}</td>
 
-                        <td class="text-success fw-bold">
-                            {{ $user['selected_completed'] }}
-                        </td>
+                            <td>{{ $user['selected_total'] }}</td>
 
-                        <td class="text-warning fw-bold">
-                            {{ $user['selected_total'] - $user['selected_completed'] }}
-                        </td>
+                            <td class="text-success fw-bold">
+                                {{ $user['selected_completed'] }}
+                            </td>
 
-                        <td>
-                            <div class="progress" style="height:6px;">
-                                <div class="progress-bar bg-primary"
-                                    style="width: {{ $user['progress'] }}%">
+                            <td class="text-warning fw-bold">
+                                {{ $user['selected_total'] - $user['selected_completed'] }}
+                            </td>
+
+                            <td>
+                                <div class="progress" style="height:6px;">
+                                    <div class="progress-bar bg-primary"
+                                        style="width: {{ $user['progress'] }}%">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <small>{{ $user['progress'] }}%</small>
-                        </td>
+                                <small>{{ $user['progress'] }}%</small>
+                            </td>
 
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-3">
-                            No data available.
-                        </td>
-                    @endforelse
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-3">
+                                No data available.
+                            </td>
+                        @endforelse
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+
+            </div>
 
         </div>
 
     </div>
-
-</div>
 
 </div>
 @endsection

@@ -34,6 +34,7 @@
                         <th>User</th>
                         <th>Email</th>
                         <th>Task</th>
+                        <th>Priority</th>
                         <th>Status</th>
                         <th width="120">Action</th>
                     </tr>
@@ -50,6 +51,12 @@
 
                         <td>{{ $task->title }}</td>
 
+                        <td>
+                            <span class="badge {{ $task->priority == 'high' ? 'bg-danger' :
+                                ($task->priority == 'medium' ? 'bg-primary' : 'bg-secondary') }}">
+                                {{ ucfirst($task->priority) }}
+                            </span>
+                        </td>
                         <td>
                             <span class="badge {{ $task->is_completed ? 'bg-success' : 'bg-warning text-dark' }}">
                                 {{ $task->is_completed ? 'Done' : 'Pending' }}
@@ -73,14 +80,14 @@
                             </button>
 
                             {{-- DELETE --}}
-                            <form action="{{ route('admin.tasks.delete', $task->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Delete this task?')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
+                            <button class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#globalDeleteModal"
+                                data-url="{{ route('admin.tasks.delete', $task->id) }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+
+                            @include('admin.modal.confirmationmodal')
 
                         </td>
 
@@ -102,6 +109,7 @@
                                     <p><strong>Email:</strong> {{ $task->user->email }}</p>
                                     <p><strong>Task:</strong> {{ $task->title }}</p>
                                     <p><strong>Description:</strong> {{ $task->description ?? '-' }}</p>
+                                    <p><strong>Priority:</strong> {{ ucfirst($task->priority) }}</p>
                                     <p><strong>Date:</strong> {{ $task->created_at }}</p>
 
                                     <p>
@@ -134,9 +142,15 @@
                                     <div class="modal-body">
 
                                         <div class="mb-2">
-                                            <label>Email</label>
-                                            <input type="email" name="email" class="form-control"
-                                                value="{{ $task->user->email ?? '' }}" required>
+                                            <label>User</label>
+                                            <select name="user_id" class="form-control">
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        {{ $task->user_id == $user->id ? 'selected' : '' }}>
+                                                        {{ $user->name }} ({{ $user->email }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class="mb-2">
@@ -157,6 +171,15 @@
                                         </div>
 
                                         <div class="mb-2">
+                                            <label>Priority</label>
+                                            <select name="priority" class="form-control">
+                                                <option value="low" {{ $task->priority == 'low' ? 'selected' : '' }}>Low</option>
+                                                <option value="medium" {{ $task->priority == 'medium' ? 'selected' : '' }}>Medium</option>
+                                                <option value="high" {{ $task->priority == 'high' ? 'selected' : '' }}>High</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-2">
                                             <label>Status</label>
                                             <select name="is_completed" class="form-control">
                                                 <option value="0" {{ !$task->is_completed ? 'selected' : '' }}>Pending</option>
@@ -167,7 +190,7 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-success w-100">Update Task</button>
+                                        <button class="btn btn-success w-100">Update Task</button>
                                     </div>
 
                                 </form>
@@ -178,7 +201,7 @@
 
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-3">No tasks found</td>
+                        <td colspan="7" class="text-center py-3">No tasks found</td>
                     </tr>
                 @endforelse
                 </tbody>
@@ -188,7 +211,7 @@
 
         {{-- PAGINATION --}}
         <div class="mt-3">
-            {{ $tasks->withQueryString()->links() }}
+            {{ $tasks->appends(request()->query())->links('admin.layouts.partials.__pagination') }}
         </div>
 
     </div>
@@ -212,8 +235,18 @@
                 <div class="modal-body">
 
                     <div class="mb-2">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <label>User</label>
+
+                        <select name="user_id" class="form-control" required>
+                            <option value="">Select User</option>
+
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">
+                                    {{ $user->name }} ({{ $user->email }})
+                                </option>
+                            @endforeach
+
+                        </select>
                     </div>
 
                     <div class="mb-2">
@@ -227,6 +260,15 @@
                     </div>
 
                     <div class="mb-2">
+                        <label>Priority</label>
+                        <select name="priority" class="form-control">
+                            <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Low</option>
+                            <option value="medium" {{ old('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
+                            <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>High</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
                         <label>Date</label>
                         <input type="date" name="task_date" class="form-control" required>
                     </div>
@@ -234,7 +276,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success w-100">Save Task</button>
+                    <button class="btn btn-success w-100">Save Task</button>
                 </div>
 
             </form>
@@ -270,6 +312,22 @@
 
                 }, 500);
 
+            });
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var deleteModal = document.getElementById('globalDeleteModal');
+
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+
+                var button = event.relatedTarget;
+                var url = button.getAttribute('data-url');
+
+                document.getElementById('globalDeleteForm').setAttribute('action', url);
             });
 
         });

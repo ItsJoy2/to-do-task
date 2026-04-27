@@ -13,7 +13,7 @@ class TodoController
     public function index(Request $request)
     {
         // SELECTED MONTH/YEAR
-        $selectedMonth = $request->month ?? now()->month;
+        $selectedMonth = $request->month ?? 'all';
         $selectedYear  = $request->year ?? now()->year;
 
         $selectedDate = Carbon::now();
@@ -60,17 +60,28 @@ class TodoController
             // MONTH FILTER (SELECTED)
 
             $monthTasks = $todos->filter(function ($todo) use ($selectedMonth, $selectedYear) {
+
                 if (!$todo->task_date) return false;
 
                 $d = Carbon::parse($todo->task_date);
+
+                // ALL MONTHS MODE
+                if ($selectedMonth === 'all') {
+                    return $d->year == $selectedYear;
+                }
 
                 return $d->month == $selectedMonth && $d->year == $selectedYear;
             });
 
             $monthCompleted = $todos->filter(function ($todo) use ($selectedMonth, $selectedYear) {
+
                 if (!$todo->completed_at) return false;
 
                 $d = Carbon::parse($todo->completed_at);
+
+                if ($selectedMonth === 'all') {
+                    return $d->year == $selectedYear;
+                }
 
                 return $d->month == $selectedMonth && $d->year == $selectedYear;
             });
@@ -146,6 +157,74 @@ class TodoController
             ->latest()
             ->paginate(15);
 
-        return view('admin.pages.tasks.index', compact('tasks'));
+        $users = User::where('role', 'user')
+            ->where('is_active', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.pages.tasks.index', compact('tasks', 'users'));
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'title' => 'required|string',
+            'task_date' => 'required|date',
+            'priority' => 'nullable|in:low,medium,high',
+            'description' => 'nullable|string',
+        ]);
+
+        Todo::create([
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'priority' => $request->priority ?? 'medium',
+            'task_date' => $request->task_date,
+        ]);
+
+        return back()->with('success', 'Task added!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $todo = Todo::findOrFail($id);
+
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'title' => 'required|string',
+            'task_date' => 'required|date',
+            'priority' => 'nullable|in:low,medium,high',
+            'description' => 'nullable|string',
+            'is_completed' => 'nullable|boolean',
+        ]);
+
+        $todo->update([
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'priority' => $request->priority ?? 'medium',
+            'task_date' => $request->task_date,
+            'is_completed' => (int) $request->is_completed,
+        ]);
+
+        // optional: completed_at auto set logic
+        if ($request->is_completed) {
+            $todo->completed_at = now();
+        } else {
+            $todo->completed_at = null;
+        }
+
+        $todo->save();
+
+        return back()->with('success', 'Task updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $todo = Todo::where('id', $id)->firstOrFail();
+
+        $todo->delete();
+
+        return redirect()->route('admin.tasks.list')->with('success', 'Task deleted successfully!');
     }
 }

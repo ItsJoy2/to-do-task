@@ -112,7 +112,7 @@
 <div class="login-wrapper">
     <div class="logo">
         @if($generalSettings && $generalSettings->logo)
-            <img src="{{ asset(str_replace('public/', '', $generalSettings->logo)) }}" alt="{{ $generalSettings->app_name ?? 'App Name' }}" class="navbar-brand" height="50">
+            <img src="{{ asset(str_replace('public/', '/storage/', $generalSettings->logo)) }}" alt="{{ $generalSettings->app_name ?? 'App Name' }}" class="navbar-brand" height="50">
         @endif
     </div>
     <h2>Admin Login</h2>

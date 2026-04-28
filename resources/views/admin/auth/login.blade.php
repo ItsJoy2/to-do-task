@@ -10,8 +10,8 @@
     <title>{{ $generalSettings->app_name ?? 'Laravel Admin' }}</title>
 
     @if($generalSettings && $generalSettings->favicon)
-        <link rel="icon" type="image/png" href="{{ asset('storage/' . $generalSettings->favicon) }}">
-        <link rel="apple-touch-icon" href="{{ asset('storage/' . $generalSettings->favicon) }}">
+        <link rel="icon" type="image/png" href="{{ asset(str_replace('public/', '', $generalSettings->favicon)) }}">
+        <link rel="apple-touch-icon" href="{{ asset(str_replace('public/', '', $generalSettings->favicon)) }}">
     @else
         <link rel="icon" type="image/png" href="{{ asset('default-favicon.png') }}">
         <link rel="apple-touch-icon" href="{{ asset('default-favicon.png') }}">
@@ -112,7 +112,7 @@
 <div class="login-wrapper">
     <div class="logo">
         @if($generalSettings && $generalSettings->logo)
-            <img src="{{ asset('public/storage/' . $generalSettings->logo) }}" alt="{{ $generalSettings->app_name ?? 'App Name' }}" class="navbar-brand" height="50">
+            <img src="{{ asset(str_replace('public/', '', $generalSettings->logo)) }}" alt="{{ $generalSettings->app_name ?? 'App Name' }}" class="navbar-brand" height="50">
         @endif
     </div>
     <h2>Admin Login</h2>

@@ -131,7 +131,7 @@
                                     <input type="text"
                                         name="title"
                                         value="{{ $todo['title'] }}"
-                                        class="form-control"
+                                        class="form-control text-light"
                                         required>
                                 </div>
 

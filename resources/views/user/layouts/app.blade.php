@@ -49,5 +49,10 @@
     <!-- plugins:js -->
    @include('user.layouts.partials.__script')
     <!-- End custom js for this page -->
+
+
+    <button id="installBtn" style="display:none; position:fixed; bottom:20px; right:20px; z-index:999;">
+        Install App
+    </button>
   </body>
 </html>

@@ -31,3 +31,9 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('todos/summary', [TodoController::class, 'summary'])->name('user.todos.summary');
 
 });
+
+Route::get('/manifest.json', function () {
+    return response()->file(public_path('manifest.json'), [
+        'Content-Type' => 'application/manifest+json'
+    ]);
+});

@@ -23,90 +23,113 @@
     <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #f4f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+    }
 
-        .login-wrapper {
-            background: #ffffff;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
+    .login-wrapper {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        padding: 40px 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
 
-        .login-wrapper .logo img {
-            max-height: 60px;
-            margin-bottom: 15px;
-        }
+    .login-wrapper .logo img {
+        max-height: 60px;
+        margin-bottom: 15px;
+        filter: brightness(0.9);
+    }
 
-        .login-wrapper h2 {
-            margin: 0 0 20px;
-            font-weight: 600;
-            color: #333;
-        }
+    .login-wrapper h2 {
+        margin: 0 0 25px;
+        font-weight: 600;
+        color: #e2e8f0;
+        letter-spacing: 0.5px;
+    }
 
-        .form-field {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            background: #f1f1f1;
-            border-radius: 8px;
-            padding: 10px 15px;
-        }
+    .form-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: 0.3s;
+        border: 1px solid transparent;
+    }
 
-        .form-field i {
-            margin-right: 10px;
-            color: #888;
-        }
+    .form-field:focus-within {
+        border: 1px solid #3b82f6;
+        background: rgba(255,255,255,0.12);
+    }
 
-        .form-field input {
-            border: none;
-            outline: none;
-            background: transparent;
-            width: 100%;
-            font-size: 16px;
-        }
+    .form-field i {
+        margin-right: 10px;
+        color: #94a3b8;
+    }
 
-        .btn {
-            width: 100%;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    .form-field input {
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        font-size: 15px;
+        color: #fff;
+    }
 
-        .btn:hover {
-            background: #0056b3;
-        }
+    .form-field input::placeholder {
+        color: #94a3b8;
+    }
 
-        .alert {
-            margin-bottom: 20px;
-            color: #fff;
-            padding: 10px;
-            background: #dc3545;
-            border-radius: 6px;
-            text-align: left;
-        }
-    </style>
+    .btn {
+        width: 100%;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .btn:hover {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .alert {
+        margin-bottom: 20px;
+        color: #fff;
+        padding: 10px;
+        background: rgba(220, 53, 69, 0.85);
+        border-radius: 8px;
+        text-align: left;
+        font-size: 14px;
+    }
+</style>
 </head>
 <body>
 <div class="login-wrapper">

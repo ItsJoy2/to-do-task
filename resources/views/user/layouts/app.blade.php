@@ -41,7 +41,7 @@
           <!-- content-wrapper ends -->
           @include('user.layouts.partials.__footer')
 
-              <button id="installBtn" style="
+              {{-- <button id="installBtn" style="
         display:none;
         position:fixed;
         bottom:20px;
@@ -53,7 +53,7 @@
         border-radius:8px;
     ">
         📲 Install App
-    </button>
+    </button> --}}
         </div>
         <!-- main-panel ends -->
       </div>

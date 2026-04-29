@@ -12,6 +12,8 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/user/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0d6efd">
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('assets/user/css/style.css') }}">
     <!-- favicon -->
@@ -204,6 +206,31 @@
             }
         }
     </script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(function(registration) {
+            console.log('SW registered:', registration);
+        }).catch(function(error) {
+            console.log('SW failed:', error);
+        });
+    }
+    </script>
+        <script>
+    let deferredPrompt;
 
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        document.getElementById('installBtn').style.display = 'block';
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+        }
+    });
+    </script>
 </body>
 </html>

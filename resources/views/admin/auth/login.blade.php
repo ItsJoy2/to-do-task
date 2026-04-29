@@ -129,6 +129,18 @@
         text-align: left;
         font-size: 14px;
     }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.08) inset !important;
+        box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.08) inset !important;
+        -webkit-text-fill-color: #e2e2e2 !important;
+        caret-color: #fff;
+        border-radius: 10px;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 </style>
 </head>
 <body>

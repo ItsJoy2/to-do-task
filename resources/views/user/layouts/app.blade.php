@@ -40,18 +40,8 @@
 
           <!-- content-wrapper ends -->
           @include('user.layouts.partials.__footer')
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-   @include('user.layouts.partials.__script')
-    <!-- End custom js for this page -->
 
-
-    <button id="installBtn" style="
+              <button id="installBtn" style="
         display:none;
         position:fixed;
         bottom:20px;
@@ -64,5 +54,17 @@
     ">
         📲 Install App
     </button>
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+   @include('user.layouts.partials.__script')
+    <!-- End custom js for this page -->
+
+
+
   </body>
 </html>

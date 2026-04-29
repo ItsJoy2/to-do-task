@@ -1,4 +1,4 @@
-const CACHE_NAME = "edulife-todo-app-v1";
+const CACHE_NAME = "edulife-todo-app-v2";
 const urlsToCache = [
     "/",
     "/login",

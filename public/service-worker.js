@@ -1,8 +1,8 @@
 const CACHE_NAME = "edulife-todo-app-v1";
 const urlsToCache = [
-    "/",
-    "{{ asset('css/app.css') }}",
-    "{{ asset('js/app.js') }}"
+    "/login",
+    "css/app.css",
+    "js/app.js"
 ];
 
 self.addEventListener("install", event => {

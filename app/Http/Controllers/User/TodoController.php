@@ -25,7 +25,7 @@ class TodoController
             })
             ->orderByRaw("is_completed ASC")
             ->orderByDesc('task_date')
-            ->limit(10)
+            ->limit(8)
             ->get();
 
 

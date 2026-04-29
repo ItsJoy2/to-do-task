@@ -9,6 +9,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ $generalSettings->app_name ?? 'Edulife ' }}</title>
+
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#0d6efd">
+
     @include('user.layouts.partials.__style')
     <!-- End layout styles -->
     @if($generalSettings && $generalSettings->favicon)

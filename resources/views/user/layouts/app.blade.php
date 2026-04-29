@@ -51,8 +51,18 @@
     <!-- End custom js for this page -->
 
 
-    <button id="installBtn" style="display:none; position:fixed; bottom:20px; right:20px; z-index:999;">
-        Install App
+    <button id="installBtn" style="
+        display:none;
+        position:fixed;
+        bottom:20px;
+        right:20px;
+        background:#0d6efd;
+        color:#fff;
+        padding:10px 15px;
+        border:none;
+        border-radius:8px;
+    ">
+        📲 Install App
     </button>
   </body>
 </html>

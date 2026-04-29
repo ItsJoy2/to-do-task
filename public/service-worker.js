@@ -1,5 +1,6 @@
 const CACHE_NAME = "edulife-todo-app-v1";
 const urlsToCache = [
+    "/",
     "/login",
     "css/app.css",
     "js/app.js"
